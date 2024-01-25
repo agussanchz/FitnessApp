@@ -1,5 +1,5 @@
 'use client'
-import Form from '@/app/components/Form'
+import Form from '../../components/Form'
 import Link from 'next/link'
 import React from 'react'
 

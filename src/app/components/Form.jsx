@@ -1,17 +1,32 @@
 'use client'
+import dynamic from "next/dynamic"
 import { useEffect, useState } from "react"
 
-export default function Home() {
+// Creando componente dinámico
+function ContentCard({ ejercicio, peso }) {
+  return (
+    <>
+      <span>{ejercicio}</span>
+      <span>{peso}kg</span>
+    </>
+  )
+}
+
+// Creamos un componente dinámico para que no se renderice en el servidor
+const DynamicCard = dynamic(async () => ContentCard, { ssr: false })
+
+
+export default function Form() {
   // Estados
   const [formData, setFormData] = useState({ ejercicio: "", peso: "" })
-  
-  const [content, setContent] = useState(()=> {
-    if(typeof window !== undefined){
-      const contentFromStorage = window.localStorage.getItem("content")
-      if(contentFromStorage) return JSON.parse(contentFromStorage)
+  const [content, setContent] = useState(() => {
+    if (typeof window !== undefined) {
+      const contentFromStorage = window.localStorage?.getItem("content")
+      if (contentFromStorage) return JSON.parse(contentFromStorage)
     }
     return []
-})
+  })
+
   // Obtener informacion de los input
   const handleChange = ({ target }) => {
     setFormData({ ...formData, [target.name]: target.value })
@@ -24,11 +39,10 @@ export default function Home() {
       const data = formData
       data.id = content.length + 1
 
-      setContent([...content, data])
       setFormData({ ejercicio: "", peso: "" })
+      setContent([...content, data])
     }
   }
-
 
   // Eliminar ejercicios
   const deleteExercice = (id) => {
@@ -42,6 +56,7 @@ export default function Home() {
     }
   }, [content]);
 
+
   return (
     <>
       <main >
@@ -54,6 +69,7 @@ export default function Home() {
               value={formData.ejercicio}
               onChange={handleChange}
               className="text-black"
+              required
             />
             <input
               type="text"
@@ -61,15 +77,14 @@ export default function Home() {
               value={formData.peso}
               onChange={handleChange}
               className="text-black"
+              required
             />
             <button type="submit" className="p-3 border">Agregar</button>
           </form>
-
           <div className="flex flex-col justify-center gap-2">
             {content.map((info) => (
-              <div className="flex justify-center gap-3 bg-slate-800 p-3" key={info}>
-                <span>{info.ejercicio}</span>
-                <span>{info.peso}kg</span>
+              <div className="flex justify-center gap-3 bg-slate-800 p-3" key={info.id}>
+                <DynamicCard ejercicio={info.ejercicio} peso={info.peso} />
                 <button onClick={() => deleteExercice(info.id)} className="text-red-600">eliminar</button>
               </div>
             ))}
