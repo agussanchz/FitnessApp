@@ -59,7 +59,7 @@ export default function Form() {
 
   return (
     <>
-      <main >
+      <section>
         <div className='h-[100vh] flex flex-col justify-center items-center gap-2' onSubmit={handleSubmit}>
           <form className="bg-red-900 flex flex-col gap-3 p-10" >
             <h2>formulario para agregar ejercicio y peso</h2>
@@ -90,7 +90,7 @@ export default function Form() {
             ))}
           </div>
         </div>
-      </main>
+      </section>
     </>
   )
 }
