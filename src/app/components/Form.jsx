@@ -24,6 +24,13 @@ export default function Form({ days }) {
         }
     }
 
+    // Eliminar ejercicios
+    const deleteExercice = (id) => {
+        const newData = data.filter((ej) => ej.id !== id)
+        setData(newData)
+    }
+
+
     return (
         <section>
             <form className="bg-red-900 flex flex-col gap-3 p-10" onSubmit={handleSubmit}>
@@ -46,7 +53,7 @@ export default function Form({ days }) {
                 />
                 <button type="submit" className="p-3 border">Agregar</button>
             </form>
-            <Data infoForm={data} days={days}/>
+            <Data infoForm={data} days={days} deleteExercice={deleteExercice} />
         </section>
     )
 }
