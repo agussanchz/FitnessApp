@@ -11,7 +11,6 @@ export default async function Home() {
         {daysOfWeek.map((days) => (
           <Link href={`/${days.id}`} className="font-bold text-gray-200 flex justify-center" key={days.id}>{days.title}</Link>
         ))}
-        <Link href={'/agregarEjercicios'} key={"keyRouteExercise"} className="border p-4">Agregar ejercicios</Link>
       </section>
     </>
   )

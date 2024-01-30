@@ -1,5 +1,6 @@
 import api from "@/api";
 import Link from "next/link";
+import Form from "../components/Form";
 
 export default async function DaysPage({ params: { id } }) {
 
@@ -11,6 +12,7 @@ export default async function DaysPage({ params: { id } }) {
             <h2 className="font-bold text-gray-200 flex justify-center">
                 {daysOfWeek.title}
             </h2>
+            <Form days={daysOfWeek.title}/>
         </section>
     )
 }

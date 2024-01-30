@@ -1,3 +1,58 @@
+'use client'
+import React, { useState } from 'react'
+import Data from './Data'
+
+
+export default function Form({ days }) {
+    const [formData, setFormData] = useState({ ejercicio: "", peso: "" })
+    const [data, setData] = useState([])
+
+    // Obtener informacion de los input
+    const handleChange = ({ target }) => {
+        setFormData({ ...formData, [target.name]: target.value })
+    }
+
+    // Manejar informacion al enviar
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if (formData.ejercicio !== "" && formData.peso !== "") {
+            const newData = formData
+            newData.id = data.length + 1
+
+            setFormData({ ejercicio: "", peso: "" })
+            setData([...data, newData])
+        }
+    }
+
+    return (
+        <section>
+            <form className="bg-red-900 flex flex-col gap-3 p-10" onSubmit={handleSubmit}>
+                <h2>formulario para agregar ejercicio y peso</h2>
+                <input
+                    type="text"
+                    name="ejercicio"
+                    value={formData.ejercicio}
+                    onChange={handleChange}
+                    className="text-black"
+                    required
+                />
+                <input
+                    type="number"
+                    name="peso"
+                    value={formData.peso}
+                    onChange={handleChange}
+                    className="text-black"
+                    required
+                />
+                <button type="submit" className="p-3 border">Agregar</button>
+            </form>
+            <Data infoForm={data} days={days}/>
+        </section>
+    )
+}
+
+
+
 // 'use client'
 // import dynamic from "next/dynamic"
 // import { useEffect, useState } from "react"
