@@ -1,9 +1,12 @@
 'use client'
 import React, { useEffect, useState } from 'react'
+import UpdateWeigthModal from './UpdateWeigthModal'
 
 export default function Form({ days }) {
     const [formData, setFormData] = useState({ ejercicio: "", peso: "" })
     const [data, setData] = useState([])
+    const [isOpen, setIsOpen] = useState(false)
+    const [selectedExercise, setSelectedExercise] = useState(null); // Nuevo estado para almacenar el ejercicio seleccionado
 
     // Verificar si existe informacion en el localStorage
     useEffect(() => {
@@ -12,7 +15,19 @@ export default function Form({ days }) {
         if (ejercicio?.length > 0) {
             setData(ejercicio)
         }
-    },[])
+    }, [])
+
+
+    // Abrir Modal con ejercicio seleccionado
+    const openPopup = (exercise) => {
+        setSelectedExercise(exercise);
+        setIsOpen(true);
+    };
+
+    // Cerrar Modal
+    const closePopup = () => {
+        setIsOpen(false);
+    };
 
     // Obtener informacion de los input
     const handleChange = ({ target }) => {
@@ -37,11 +52,24 @@ export default function Form({ days }) {
         setData(newData)
     }
 
+    // Función para actualizar el peso del ejercicio
+    const updateExerciseWeight = (id, newWeight) => {
+        setData(prevData => {
+            return prevData.map(item => {
+                if (item.id === id) {
+                    return { ...item, peso: newWeight };
+                }
+                return item;
+            });
+        });
+    };
+
     // Guardando en LocalStorage
     useEffect(() => {
         localStorage.setItem(`${days}`, JSON.stringify(data))
     }, [data]);
 
+    console.log(data)
     return (
         <section>
             <form className="bg-red-900 flex flex-col gap-3 p-10" onSubmit={handleSubmit}>
@@ -70,11 +98,18 @@ export default function Form({ days }) {
                         <div className='flex flex-col justify-center items-center gap-3 p-2 border' key={"key unica"}>
                             <span>{x.ejercicio}</span>
                             <span>{x.peso}</span>
-                            <button onClick={() => deleteExercice(x.id)} className="text-red-600">eliminar</button>
+                            <button onClick={() => openPopup(x)} className='text-blue-600'>Cambiar peso</button>
+                            <button onClick={() => deleteExercice(x.id)} className="text-red-600">Eliminar ejercicio</button>
                         </div>
                     </>
                 ))}
             </div>
+            <UpdateWeigthModal
+                isOpen={isOpen}
+                onClose={closePopup}
+                exercise={selectedExercise}
+                updateExerciseWeight={updateExerciseWeight}
+            />
         </section>
     )
 }
