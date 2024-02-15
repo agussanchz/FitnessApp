@@ -7,10 +7,12 @@ export default async function Home() {
 
   return (
     <>
-      <section className="flex flex-col gap-3">
+      <section className="p-4">
+        <div className="flex flex-col gap-4">
         {daysOfWeek.map((days) => (
-          <Link href={`/${days.id}`} className="font-bold text-gray-200 flex justify-center" key={days.id}>{days.title}</Link>
+          <Link href={`/${days.id}`} className="font-bold text-slate-900 flex justify-center items-center text-center cursor-pointer p-3 rounded-xl border border-slate-900" key={days.id}>{days.title}</Link>
         ))}
+        </div>
       </section>
     </>
   )

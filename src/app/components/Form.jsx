@@ -72,34 +72,39 @@ export default function Form({ days }) {
     console.log(data)
     return (
         <section>
-            <form className="bg-red-900 flex flex-col gap-3 p-10" onSubmit={handleSubmit}>
-                <h2>formulario para agregar ejercicio y peso</h2>
+            <form className="bg-slate-400 opacity-50 border shadow-sm shadow-slate-50 border-gray-400 flex flex-col justify-center items-center gap-3 p-10 rounded-2xl" onSubmit={handleSubmit}>
                 <input
+                    placeholder='Sentadilla, Press Banca, Press militar...'
                     type="text"
                     name="ejercicio"
                     value={formData.ejercicio}
                     onChange={handleChange}
-                    className="text-black"
+                    className="w-11/12 text-black text-center p-3 rounded-md outline-none bg-transparent border-b border-black placeholder-black"
                     required
                 />
                 <input
+                    placeholder='10, 20, 30, 40...'
                     type="number"
                     name="peso"
                     value={formData.peso}
                     onChange={handleChange}
-                    className="text-black"
+                    className="w-11/12 text-black text-center p-3 rounded-md outline-none bg-transparent border-b border-black placeholder-black"
                     required
                 />
-                <button type="submit" className="p-3 border">Agregar</button>
+                <button type="submit" className="text-white text-md p-3 border border-black rounded-md w-24 bg-slate-900">AGREGAR</button>
             </form>
-            <div className="flex flex-col justify-center p-2 gap-2">
+            <div className="flex flex-col justify-center items-center p-2 gap-3 text-gray-400">
                 {data.map((x) => (
                     <>
-                        <div className='flex flex-col justify-center items-center gap-3 p-2 border' key={"key unica"}>
-                            <span>{x.ejercicio}</span>
-                            <span>{x.peso}</span>
-                            <button onClick={() => openPopup(x)} className='text-blue-600'>Cambiar peso</button>
-                            <button onClick={() => deleteExercice(x.id)} className="text-red-600">Eliminar ejercicio</button>
+                        <div className='w-11/12 flex flex-col justify-center items-center gap-3 p-2 text-slate-900 border border-slate-900  rounded-md' key={"key unica"}>
+                            <div className='flex flex-col justify-center items-center gap-3'>
+                                <span className='font-bold'>{x.ejercicio}</span>
+                                <span className='font-bold'>{x.peso}</span>
+                            </div>
+                            <div className='flex gap-4'>
+                                <button onClick={() => openPopup(x)} className='border border-slate-900 p-2 rounded-md'>Cambiar peso</button>
+                                <button onClick={() => deleteExercice(x.id)} className= "text-red-800 border border-red-800 p-2 rounded-md">Eliminar Ejercico</button>
+                            </div>
                         </div>
                     </>
                 ))}

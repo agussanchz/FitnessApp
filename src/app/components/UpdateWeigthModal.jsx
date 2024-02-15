@@ -13,6 +13,7 @@ export default function UpdateWeigthModal({ isOpen, onClose, exercise, updateExe
         e.preventDefault();
         // Llamar a la función de actualización con el id del ejercicio y el nuevo peso
         updateExerciseWeight(exercise.id, newWeight);
+        setNewWeight("")
         onClose();
     };
 
@@ -25,18 +26,18 @@ export default function UpdateWeigthModal({ isOpen, onClose, exercise, updateExe
             overlayClassName="fixed inset-0"
         >
             <section>
-                <div className='flex flex-col gap-3'>
-                    <button onClick={onClose}>X</button>
-                    <form onSubmit={handleSubmit}>
+                <div className='flex flex-col items-start gap-3 bg-slate-900 p-10 rounded-3xl'>
+                    <button onClick={onClose} className="text-white">X</button>
+                    <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center gap-3">
                         <input
                             type="number"
                             name="peso"
-                            placeholder='inserte nuevo peso'
-                            className='text-black'
+                            placeholder='Inserte nuevo peso'
+                            className='text-black p-2 rounded-md outline-none text-center'
                             value={newWeight}
                             onChange={handleChange}
                         />
-                        <button type="submit">Cambiar</button>
+                        <button type="submit" className="text-gray-400 text-md p-3 border rounded-md w-24">Cambiar</button>
                     </form>
                 </div>
             </section>
